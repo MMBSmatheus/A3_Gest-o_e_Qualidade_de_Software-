@@ -22,10 +22,8 @@ public class UsersDAO {
                 while (result.next()) {
                     
                     String teste = result.getString("password");
-                    System.out.println("senha: '" + user.password + "'");
-                    System.out.println("banco: '" + teste + "'");
                     if (user.password.equals(teste.toString().intern())) {
-                        System.out.println("entrei");
+                        
                         retorno = 1;
                     }
                 }
