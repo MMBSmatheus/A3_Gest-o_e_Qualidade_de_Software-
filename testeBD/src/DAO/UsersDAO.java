@@ -2,6 +2,8 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import conexao.Conexao;
 import entity.Users;
@@ -98,7 +100,37 @@ public class UsersDAO {
         return retorno;
     }
 
-
+    public List<Users> listaUsers(){
+        String sql  = "SELECT id,username FROM todo_list_db.users";
+        List<Users> listaUsers = new ArrayList<>();
+        PreparedStatement ps = null;
+        
+        
+        
+        try{
+            ps = Conexao.getConexao().prepareStatement(sql);
+            // Salvando resultado da consulta o resultado da query
+            ResultSet result = ps.executeQuery();
+                // Montando lista para retornar
+                while (result.next()) {
+                    Users temp = new Users();
+                    temp.id = Integer.parseInt(result.getString("id"));
+                    temp.username = result.getString("username");
+                    listaUsers.add(temp);
+                }
+                ps.close();
+            return listaUsers;
+        } catch (SQLException se) {
+            // Trata os erros de SQL
+            se.printStackTrace();
+        } catch (Exception e) {
+            // Trata outros erros
+            e.printStackTrace();
+        }finally{
+            
+        }
+        return listaUsers;
+    }
     
 
 }
