@@ -2,6 +2,8 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import conexao.Conexao;
 import entity.*;
@@ -84,8 +86,8 @@ public class TaskDAO {
             }
     }
 
-    public void editarTask(int task,String description){
-        String sql  = "update todo_list_db.tasks set description ='" + description +  "' where id = " + task;
+    public void editarTask(int task,String description, String status){
+        String sql  = "update todo_list_db.tasks set description ='" + description +  "', status = '" + status + "' where id = " + task;
         PreparedStatement ps = null;
         try{
             // Insere os dados
@@ -101,8 +103,43 @@ public class TaskDAO {
                 // Trata outros erros
                 e.printStackTrace();
             }finally{
-                Conexao.fechaConexao();
             }
     }
 
+    public List<Task> listaTask(){
+        String sql  = "SELECT * FROM todo_list_db.tasks";
+        List<Task> listaUsers = new ArrayList<>();
+        PreparedStatement ps = null;
+        
+        
+        
+        try{
+            ps = Conexao.getConexao().prepareStatement(sql);
+            // Salvando resultado da consulta o resultado da query
+            ResultSet result = ps.executeQuery();
+                // Montando lista para retornar
+                while (result.next()) {
+                    Task temp = new Task();
+                    temp.id = Integer.parseInt(result.getString("id"));
+                    if (result.getString("user_id") != null) {
+                        temp.user_id = Integer.parseInt(result.getString("user_id"));
+                    }
+                    
+                    temp.description = result.getString("description");
+                    temp.status = result.getString("status");
+                    listaUsers.add(temp);
+                }
+                ps.close();
+            return listaUsers;
+        } catch (SQLException se) {
+            // Trata os erros de SQL
+            se.printStackTrace();
+        } catch (Exception e) {
+            // Trata outros erros
+            e.printStackTrace();
+        }finally{
+            
+        }
+        return listaUsers;
+    }
 }
