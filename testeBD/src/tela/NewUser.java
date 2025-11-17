@@ -26,6 +26,18 @@ public class NewUser extends JFrame implements ActionListener {
         botaoLogin = new JButton("Cadastrar");
 
         botaoLogin.addActionListener(this);
+
+        // Criando e adicionando o botão "Voltar"
+        JButton btnVoltar = new JButton("Voltar");
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Fecha a janela quando o botão "Voltar" é clicado
+                dispose();
+                new Menu();
+            }
+        });
+        getContentPane().add(btnVoltar, BorderLayout.SOUTH);
         
         painel.add(labelUsuario);
         painel.add(campoUsuario);
