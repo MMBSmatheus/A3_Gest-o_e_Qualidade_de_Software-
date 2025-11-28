@@ -10,7 +10,7 @@ import entity.*;
 public class TaskDAO {
     public int criaTask(Task task){
         int retorno = 0;
-        String sql  = "INSERT INTO todo_list_db.tasks(description,status)VALUES('" + task.description + "','Aberta')";
+        String sql  = "INSERT INTO todo_db.tasks(description,status)VALUES('" + task.description + "','Aberta')";
         PreparedStatement ps = null;
         try{
             // Insere os dados
@@ -20,7 +20,7 @@ public class TaskDAO {
 
             
             // Retornar os dados do cliente cadastrado
-            String sql2  = "SELECT id FROM todo_list_db.tasks WHERE description = '" + task.description + "'";
+            String sql2  = "SELECT id FROM todo_db.tasks WHERE description = '" + task.description + "'";
             ps = Conexao.getConexao().prepareStatement(sql2);
             ResultSet result2 = ps.executeQuery();
             while (result2.next()) {
@@ -39,13 +39,13 @@ public class TaskDAO {
                 // Trata outros erros
                 e.printStackTrace();
             }finally{
-                Conexao.fechaConexao();
+                
             }
             return retorno;                      
     }
 
     public void direcionarTask(int task,int user){
-        String sql  = "update todo_list_db.tasks set user_id = " + user + ", status = 'Encaminhada' where id =" + task;
+        String sql  = "update todo_db.tasks set user_id = " + user + ", status = 'Encaminhada' where id =" + task;
         PreparedStatement ps = null;
         try{
             // Insere os dados
@@ -61,12 +61,12 @@ public class TaskDAO {
                 // Trata outros erros
                 e.printStackTrace();
             }finally{
-                Conexao.fechaConexao();
+                
             }
     }
 
     public void deletarTask(int task){
-        String sql  = "delete from todo_list_db.tasks where id = " + task;
+        String sql  = "delete from todo_db.tasks where id = " + task;
         PreparedStatement ps = null;
         try{
             // Insere os dados
@@ -82,12 +82,12 @@ public class TaskDAO {
                 // Trata outros erros
                 e.printStackTrace();
             }finally{
-                Conexao.fechaConexao();
+                
             }
     }
 
     public void editarTask(int task,String description, String status){
-        String sql  = "update todo_list_db.tasks set description ='" + description +  "', status = '" + status + "' where id = " + task;
+        String sql  = "update todo_db.tasks set description ='" + description +  "', status = '" + status + "' where id = " + task;
         PreparedStatement ps = null;
         try{
             // Insere os dados
@@ -107,7 +107,7 @@ public class TaskDAO {
     }
 
     public List<Task> listaTask(){
-        String sql  = "SELECT * FROM todo_list_db.tasks";
+        String sql  = "SELECT * FROM todo_db.tasks";
         List<Task> listaUsers = new ArrayList<>();
         PreparedStatement ps = null;
         

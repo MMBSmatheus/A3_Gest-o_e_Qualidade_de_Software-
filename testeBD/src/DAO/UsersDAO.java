@@ -11,7 +11,7 @@ import entity.Users;
 public class UsersDAO {
     public int validarUsuario(Users user){
         int retorno = 0;
-        String sql  = "SELECT password FROM todo_list_db.users WHERE username = '" + user.username + "'";
+        String sql  = "SELECT password FROM todo_db.users WHERE username = '" + user.username + "'";
 
         PreparedStatement ps = null;
         
@@ -45,7 +45,7 @@ public class UsersDAO {
 
 
     public Users criarUsuario(Users user){
-        String sql  = "SELECT * FROM todo_list_db.users WHERE username = '" + user.username + "'";
+        String sql  = "SELECT * FROM todo_db.users WHERE username = '" + user.username + "'";
         PreparedStatement ps = null;
         Users retorno = new Users();
         try{
@@ -54,13 +54,13 @@ public class UsersDAO {
             ResultSet result = ps.executeQuery();
             
             if(!result.isBeforeFirst()){
-                String sql2  = "insert into todo_list_db.users(username,password) values ('" + user.username + "','" + user.password + "')";
+                String sql2  = "insert into todo_db.users(username,password) values ('" + user.username + "','" + user.password + "')";
                 
                 ps = Conexao.getConexao().prepareStatement(sql2);
                 ps.execute();
                 ps.close();
                 // Retornar os dados do cliente cadastrado
-                String sql3  = "SELECT * FROM todo_list_db.users WHERE username = '" + user.username + "'";
+                String sql3  = "SELECT * FROM todo_db.users WHERE username = '" + user.username + "'";
                 ps = Conexao.getConexao().prepareStatement(sql3);
                 ResultSet result2 = ps.executeQuery();
                 while (result2.next()) {
@@ -95,13 +95,13 @@ public class UsersDAO {
             // Trata outros erros
             e.printStackTrace();
         }finally{
-            Conexao.fechaConexao();
+            
         }
         return retorno;
     }
 
     public List<Users> listaUsers(){
-        String sql  = "SELECT id,username FROM todo_list_db.users";
+        String sql  = "SELECT id,username FROM todo_db.users";
         List<Users> listaUsers = new ArrayList<>();
         PreparedStatement ps = null;
         

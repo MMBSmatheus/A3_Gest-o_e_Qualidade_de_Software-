@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 public  class Conexao {
-    static final String DB_URL = "jdbc:mysql://localhost:3306/todo_list_db";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/todo_db";
     static final String USER = "root";
     static final String PASS = "teste";
 
